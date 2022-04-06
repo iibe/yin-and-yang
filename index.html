@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yin and Yang</title>
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/ico/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/ico/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/ico/favicon-16x16.png"
+    />
+    <link rel="manifest" href="assets/ico/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <!-- Client scritps -->
+    <script defer src="./index.js"></script>
+  </head>
+  <body
+    class="w-full min-h-screen bg-gray-50 text-dark-900 font-['Montserrat'] font-medium p-4 space-y-8 overflow-y-scroll"
+  >
+    <section id="params" class="flex flex-col space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="space-y-2">
+          <label for="color-black" class="text-sm uppercase">
+            From black (min)
+          </label>
+          <input
+            id="color-black"
+            type="number"
+            placeholder="In range [0, 127]"
+            required
+            min="0"
+            max="127"
+            value="14"
+            class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <span class="text-xs text-gray-500">
+            Left part of color palette (predominantly black tones)
+          </span>
+        </div>
+        <div class="space-y-2">
+          <label for="color-white" class="text-sm uppercase">
+            To white (max)
+          </label>
+          <input
+            id="color-white"
+            type="number"
+            placeholder="In range [127, 255]"
+            required
+            min="127"
+            max="255"
+            value="240"
+            class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <span class="text-xs text-gray-500">
+            Right part of color palette (predominantly white tones)
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="space-y-2">
+          <label for="color-count" class="text-sm uppercase">
+            Number of color splits
+          </label>
+          <input
+            id="color-count"
+            type="number"
+            required
+            min="1"
+            max="256"
+            value="10"
+            class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <span class="text-xs text-gray-500">
+            Number of generated colors (if color coefficient is equal to 1)
+          </span>
+        </div>
+        <div class="space-y-2">
+          <label for="color-coeff" class="text-sm uppercase">
+            Color coefficient
+          </label>
+          <input
+            id="color-coeff"
+            type="number"
+            required
+            min="0"
+            max="10"
+            step="0.05"
+            value="1"
+            class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <span class="text-xs text-gray-500">
+            Each next color X times brighter then the previous one
+          </span>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label for="color-align" class="text-sm uppercase">
+          Color position
+        </label>
+        <select
+          id="color-align"
+          required
+          class="outline-none appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="start">Start (left)</option>
+          <option value="evenly">Evenly (center)</option>
+          <option value="end">End (right)</option>
+        </select>
+      </div>
+      <button
+        id="button"
+        type="button"
+        class="transition duration-300 outline-none text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-500 focus:bg-gradient-to-l font-medium rounded text-sm px-6 py-3 text-center"
+      >
+        Generate colors
+      </button>
+    </section>
+    <section
+      id="colors"
+      class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 xl:grid-cols-10 xxl:grid-cols-12 gap-2"
+    ></section>
+  </body>
+</html>
