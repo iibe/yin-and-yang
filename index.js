@@ -18,7 +18,9 @@ window.onload = () => {
 $count.onchange = () => {
   $button.click();
 };
-
+$coeff.onchange = () => {
+  $button.click();
+};
 $align.onchange = () => {
   $button.click();
 };
