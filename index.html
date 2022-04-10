@@ -43,8 +43,24 @@
   <body
     class="w-full min-h-screen bg-gray-50 text-dark-900 font-['Montserrat'] font-medium p-4 space-y-8 overflow-y-scroll"
   >
-    <section id="params" class="flex flex-col space-y-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <form id="params" class="flex flex-col space-y-4">
+      <fieldset class="grid grid-cols-1 gap-2">
+        <div class="space-y-2">
+          <label for="color-align" class="text-sm uppercase">
+            Color position
+          </label>
+          <select
+            id="color-align"
+            required
+            class="outline-none appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="start">Start (left)</option>
+            <option value="evenly">Evenly (center)</option>
+            <option value="end">End (right)</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div class="space-y-2">
           <label for="color-black" class="text-sm uppercase">
             From black (min)
@@ -81,8 +97,8 @@
             Right part of color palette (predominantly white tones)
           </span>
         </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      </fieldset>
+      <fieldset class="grid grid-cols-1 md:grid-cols-3 gap-2">
         <div class="space-y-2">
           <label for="color-count" class="text-sm uppercase">
             Number of color splits
@@ -101,11 +117,11 @@
           </span>
         </div>
         <div class="space-y-2">
-          <label for="color-coeff" class="text-sm uppercase">
-            Color coefficient
+          <label for="color-ratio" class="text-sm uppercase">
+            Color ratio
           </label>
           <input
-            id="color-coeff"
+            id="color-ratio"
             type="number"
             required
             min="1"
@@ -115,24 +131,27 @@
             class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
           <span class="text-xs text-gray-500">
-            Each next color X times brighter then the previous one
+            Each next color in N times brighter then the previous one
           </span>
         </div>
-      </div>
-      <div class="space-y-2">
-        <label for="color-align" class="text-sm uppercase">
-          Color position
-        </label>
-        <select
-          id="color-align"
-          required
-          class="outline-none appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="start">Start (left)</option>
-          <option value="evenly">Evenly (center)</option>
-          <option value="end">End (right)</option>
-        </select>
-      </div>
+        <div class="space-y-2">
+          <label for="color-every" class="text-sm uppercase">
+            Each N-th color
+          </label>
+          <input
+            id="color-every"
+            type="number"
+            required
+            min="1"
+            max="256"
+            value="1"
+            class="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <span class="text-xs text-gray-500">
+            Takes each N-th color from palette
+          </span>
+        </div>
+      </fieldset>
       <button
         id="button"
         type="button"
@@ -140,10 +159,10 @@
       >
         Generate colors
       </button>
-    </section>
-    <section
+    </form>
+    <main
       id="colors"
       class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 xl:grid-cols-10 xxl:grid-cols-12 gap-2"
-    ></section>
+    ></main>
   </body>
 </html>

@@ -1,11 +1,12 @@
 const BLACK = 0;
 const WHITE = 255;
 
+const $align = document.querySelector("#color-align");
 const $black = document.querySelector("#color-black");
 const $white = document.querySelector("#color-white");
 const $count = document.querySelector("#color-count");
-const $coeff = document.querySelector("#color-coeff");
-const $align = document.querySelector("#color-align");
+const $ratio = document.querySelector("#color-ratio");
+const $every = document.querySelector("#color-every");
 
 const $params = document.querySelector("#params");
 const $button = document.querySelector("#button");
@@ -15,13 +16,24 @@ window.onload = () => {
   $button.click();
 };
 
+$align.onchange = () => {
+  $button.click();
+};
+
+$black.onchange = () => {
+  $button.click();
+};
+$white.onchange = () => {
+  $button.click();
+};
+
 $count.onchange = () => {
   $button.click();
 };
-$coeff.onchange = () => {
+$ratio.onchange = () => {
   $button.click();
 };
-$align.onchange = () => {
+$every.onchange = () => {
   $button.click();
 };
 
@@ -34,8 +46,9 @@ $button.addEventListener("click", (event) => {
   const r = parseInt($white.value, 10); // [127, 255]
   const diapason = r - l; // [0, 255]
   const range = diapason + 1; // [1, 256]
-  const count = parseInt($count.value, 10); // [1, 256];
-  const coeff = parseFloat($coeff.value, 10); // [1, 10]
+  const count = parseInt($count.value, 10); // [1, 256]
+  const ratio = parseFloat($ratio.value, 10); // [1, 10]
+  const every = parseInt($every.value, 10); // [1, 256]
 
   if (count > range) {
     const $err = document.createElement("div");
@@ -56,9 +69,6 @@ $button.addEventListener("click", (event) => {
   const subrange = count * step;
   const remainder = diapason - subrange;
 
-  // console.log(l, r, diapason);
-  // console.log(diapason, count, step, subrange, remainder);
-
   let min, max;
   switch ($align.value) {
     case "start":
@@ -76,9 +86,11 @@ $button.addEventListener("click", (event) => {
       break;
   }
 
-  // console.log(min, max);
+  for (let i = min, j = 1; i <= max; i += Math.floor(step * ratio), j++) {
+    if (j % every !== 0) {
+      continue;
+    }
 
-  for (let i = min; i <= max; i += Math.floor(step * coeff)) {
     const color = `#${hex(i)}`;
 
     // create dom elements
