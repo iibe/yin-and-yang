@@ -49,7 +49,6 @@ $button.addEventListener("click", (event) => {
   const count = parseInt($count.value, 10); // [1, 256]
   const ratio = parseFloat($ratio.value, 10); // [1, 10]
   const every = parseEvery($every.value); // ax + b
-  console.log(every.a, every.b);
 
   if (count > range) {
     err(
