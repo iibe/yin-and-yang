@@ -33,7 +33,7 @@ $count.onchange = () => {
 $ratio.onchange = () => {
   $button.click();
 };
-$every.onchange = () => {
+$every.oninput = () => {
   $button.click();
 };
 
@@ -48,20 +48,13 @@ $button.addEventListener("click", (event) => {
   const range = diapason + 1; // [1, 256]
   const count = parseInt($count.value, 10); // [1, 256]
   const ratio = parseFloat($ratio.value, 10); // [1, 10]
-  const every = parseInt($every.value, 10); // [1, 256]
+  const every = parseEvery($every.value); // ax + b
+  console.log(every.a, every.b);
 
   if (count > range) {
-    const $err = document.createElement("div");
-    $err.classList = Object.values({
-      layout: "p-4 bg-red-100",
-      border: "border border-red-500 rounded",
-      typography: "text-xs text-red-500 font-medium",
-    }).join(" ");
-    $err.textContent = `Colors number - ${count}, is greater than an available hex colors in range - ${range}`;
-    $params.appendChild($err);
-    setTimeout(() => {
-      $params.removeChild($err);
-    }, 3000);
+    err(
+      `Colors number - ${count}, is greater than an available hex colors in range - ${range}`,
+    );
     return;
   }
 
@@ -87,7 +80,7 @@ $button.addEventListener("click", (event) => {
   }
 
   for (let i = min, j = 1; i <= max; i += Math.floor(step * ratio), j++) {
-    if (j % every !== 0) {
+    if (j % every.a === every.b) {
       continue;
     }
 
@@ -154,4 +147,33 @@ $button.addEventListener("click", (event) => {
 
 function hex(number = 0) {
   return number.toString(16).padStart(2, 0).repeat(3);
+}
+
+function err(string = "") {
+  const $err = document.createElement("div");
+  $err.classList = Object.values({
+    layout: "p-4 bg-red-100",
+    border: "border border-red-500 rounded",
+    typography: "text-xs text-red-500 font-medium",
+  }).join(" ");
+  $err.textContent = string;
+
+  $params.appendChild($err);
+
+  setTimeout(() => {
+    $params.removeChild($err);
+  }, 3000);
+}
+
+function parseEvery(formula = "") {
+  formula = formula.replaceAll(" ", "");
+
+  const regex = /^((\d+)?n)?\+?(\d+)?$/g;
+  if (!formula.match(regex)) {
+    err(`Wrong expression: ${formula}`);
+  }
+
+  const [a, b] = formula.replace("+", "").split("n");
+
+  return { a: parseInt(a), b: parseInt(b) || 0 };
 }
